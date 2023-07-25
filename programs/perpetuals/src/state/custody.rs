@@ -493,6 +493,10 @@ impl Custody {
 
         // update collateral custody for interest tracking
         if let Some(custody) = collateral_custody {
+            // compute accumulated interest
+            let collective_position = custody.get_collective_position(position.side)?;
+            let interest_usd = custody.get_interest_amount_usd(&collective_position, curtime)?;
+
             let stats = if position.side == Side::Long {
                 &mut custody.long_positions
             } else {
@@ -562,6 +566,10 @@ impl Custody {
 
         // update collateral custody for interest tracking
         if let Some(custody) = collateral_custody {
+            // compute accumulated interest
+            let collective_position = custody.get_collective_position(position.side)?;
+            let interest_usd = custody.get_interest_amount_usd(&collective_position, curtime)?;
+
             let stats = if position.side == Side::Long {
                 &mut custody.long_positions
             } else {
